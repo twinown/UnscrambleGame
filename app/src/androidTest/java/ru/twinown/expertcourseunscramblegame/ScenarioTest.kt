@@ -13,6 +13,7 @@ import ru.twinown.expertcourseunscramblegame.game.GamePage
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
 
+    //какое активити стартуем
     @get:Rule
     val scenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
@@ -20,6 +21,8 @@ class ScenarioTest {
 
     @Before
     fun setUp(){
+        //активити и фрагмент заменяется вот такой хернёс с суфф page
+        //во фрагмах вьюхи. а в пейдж объектвх юайные объекты (пейдж объект состоит из юайныъ объектов)
         gamePage = GamePage(word = "animal".reversed() )
 
     }

@@ -46,6 +46,9 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
         )
     )
 
+    //то есть на это й функции ты спрашиваешь себя , как должен вести себя твой инпут юай на инишал стейте
+    //в матчесе ты и пишешь ожидаемый результат
+    //далее типо по такой же схеме
     fun assertInitialSate() {
         layoutInteraction.check(matches(isEnabled())).check(
             matches(TextInputLayoutErrorEnabledMatcher(false))
