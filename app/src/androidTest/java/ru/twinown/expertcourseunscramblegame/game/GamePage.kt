@@ -11,9 +11,14 @@ import ru.twinown.expertcourseunscramblegame.R
 
 class GamePage(word: String) {
 
+    //мои объекты сидят в одном и том же контейнере (живут в нем)
     private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
+
+    //а это тип моего контейнера
     private val containerClassTypeMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
+
+    //твои вьюхи живут в контейнере конкретного типа с конкретным айдишником
 
     private val shuffleWordUi = ShuffleWordUi(
         text = word,  //word не меняется, поэтому он в конструкторе
@@ -53,7 +58,7 @@ class GamePage(word: String) {
         containerClassTypeMatcher = containerClassTypeMatcher
     )
 
-    //при состоянии экрана проверяем состояние каждого элемента
+    //при проверке состояния экрана проверяем состояние каждого элемента(с блюпринта,крч, типо , понял,да)
     fun assertInitialState() {
         shuffleWordUi.assertTextVisible()
         inputUi.assertInitialSate()

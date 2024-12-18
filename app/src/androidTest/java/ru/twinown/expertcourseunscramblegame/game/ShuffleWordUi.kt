@@ -13,6 +13,13 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import ru.twinown.expertcourseunscramblegame.R
 
+/**
+ * Properties:
+ * visibility
+ */
+
+//думаешь над тем. какими свойствами обладает твоя вьюха
+//видишь, тут одно свойство, потому ты сразу назвал ассертвизибл
 class ShuffleWordUi(
     text: String,
     containerIdMatcher: Matcher<View>,
@@ -20,6 +27,9 @@ class ShuffleWordUi(
 ) {
 
     //постоянный элемент пишется в интеракторе вот так
+
+    //это твоя вьюха в обёртке для эспрессо!!!
+    // чтоб постоянно не писать это всё, выводим в отльеную переменную
     private val interaction: ViewInteraction = onView(
         allOf(
             containerIdMatcher,
@@ -30,6 +40,7 @@ class ShuffleWordUi(
         )
     )
 
+    //то есть мы проверяем на этой фунцкии, видна ли твоя вюьха
     fun assertTextVisible() {
         interaction.check(matches(isCompletelyDisplayed()))
     }
