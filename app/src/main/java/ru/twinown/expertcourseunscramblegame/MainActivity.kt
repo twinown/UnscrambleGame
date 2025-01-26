@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import ru.twinown.expertcourseunscramblegame.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,32 @@ class MainActivity : AppCompatActivity() {
         }
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        val viewModel:GameViewModel = GameViewModel()
+
+        binding.inputEditText.addTextChangedListener {
+            val uiState : GameUiState = viewModel.handleUserInput(text = it.toString())
+            uiState.upadate(binding = binding )
+        }
+
+        binding.checkButton.setOnClickListener {
+            val uiState : GameUiState = viewModel.checkText(text = binding.inputEditText.text.toString())
+            uiState.update(binding = binding )
+        }
+
+        binding.nextButton.setOnClickListener {
+            val uiState : GameUiState = viewModel.next()
+            uiState.upadate(binding = binding )
+        }
+
+        binding.skipButton.setOnClickListener {
+            val uiState : GameUiState = viewModel.skip()
+            uiState.upadate(binding = binding )
+        }
+
+        val uiState :GameUiState = viewModel.init()
+        uiState.update(binding = binding)
 
     }
 }
