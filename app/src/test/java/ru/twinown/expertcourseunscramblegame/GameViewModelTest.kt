@@ -34,7 +34,7 @@ class GameViewModelTest {
         assertEquals(expected, actual)
 
         actual = viewModel.next()
-        expected = GameUiState.Initial(word = "f2")
+        expected = GameUiState.Initial(shuffledWord = "f2")
         assertEquals(expected, actual)
     }
 
@@ -119,14 +119,11 @@ class GameViewModelTest {
         actual = viewModel.check(text = "f7")
         expected = GameUiState.Incorrect(shuffledWord = "f6")
         assertEquals(expected, actual)*/
-
-
-
     }
 }
 private class FakeRepository:GameRepository{
 
-    private val originalList:List<String> = listOf("1f","2f","3f","4f","55")
+    private val originalList:List<String> = listOf("1f","2f","3f","4f","5f")
     private val shuffledList =originalList.map { it.reversed() }
 
     private var index = 0
@@ -136,7 +133,8 @@ private class FakeRepository:GameRepository{
     }
 
 
-    //ты спрашивал ,где будем делать проверку..делаем всё же в репозитории
+    //ты спрашивал ,где будем делать проверку..делаем всё же в репозитории//НЕТ
+    //ТЫ ПРАВИЛЬНО ДУМАЛ,сравнение делается во вьюмодельке
     //от репы отдаём обратно,видишь
     override fun originalWord ():String = originalList[index]
 

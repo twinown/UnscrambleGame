@@ -21,26 +21,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val viewModel:GameViewModel = GameViewModel()
+        val viewModel:GameViewModel = GameViewModel(object :GameRepository{
+            override fun shuffledWord(): String {
+                TODO("Not yet implemented")
+
+            }
+
+            override fun originalWord(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun next() {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
 
         binding.inputEditText.addTextChangedListener {
             val uiState : GameUiState = viewModel.handleUserInput(text = it.toString())
-            uiState.upadate(binding = binding )
+            uiState.update(binding = binding )
         }
 
         binding.checkButton.setOnClickListener {
-            val uiState : GameUiState = viewModel.checkText(text = binding.inputEditText.text.toString())
+            val uiState : GameUiState = viewModel.check(text = binding.inputEditText.text.toString())
             uiState.update(binding = binding )
         }
 
         binding.nextButton.setOnClickListener {
             val uiState : GameUiState = viewModel.next()
-            uiState.upadate(binding = binding )
+            uiState.update(binding = binding )
         }
 
         binding.skipButton.setOnClickListener {
             val uiState : GameUiState = viewModel.skip()
-            uiState.upadate(binding = binding )
+            uiState.update(binding = binding )
         }
 
         val uiState :GameUiState = viewModel.init()
