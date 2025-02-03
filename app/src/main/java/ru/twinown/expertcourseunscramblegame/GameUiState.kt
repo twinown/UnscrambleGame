@@ -1,7 +1,7 @@
 package ru.twinown.expertcourseunscramblegame
 
 import ru.twinown.expertcourseunscramblegame.databinding.ActivityMainBinding
-
+//
 interface GameUiState {
     fun update(binding: ActivityMainBinding):Unit = throw  IllegalStateException("")
 

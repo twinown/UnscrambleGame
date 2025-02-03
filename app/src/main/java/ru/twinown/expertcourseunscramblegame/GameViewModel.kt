@@ -3,7 +3,7 @@ package ru.twinown.expertcourseunscramblegame
 class GameViewModel (private val repository: GameRepository){
 
 
-
+//
     fun handleUserInput(text: String): GameUiState {
         val shuffledWord = repository.shuffledWord()
         val isSufficient  = text.length == repository.originalWord().length
