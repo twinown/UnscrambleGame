@@ -15,7 +15,7 @@ class ScenarioTest {
 
     //какое активити стартуем
     @get:Rule
-    val scenarioRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     private lateinit var gamePage: GamePage
 
@@ -34,19 +34,27 @@ class ScenarioTest {
     fun caseNumber1() {
 
         gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInitialState()
 
         gamePage.addInput("anima")
+        gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "l")
         gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
 
         gamePage.clickCheck()
         gamePage.assertCorrectState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertCorrectState()
 
         gamePage.clickNext()
-
         gamePage = GamePage(word= "auto".reversed())
+        gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInitialState()
 
     }
@@ -58,9 +66,13 @@ class ScenarioTest {
     fun caseNumber2() {
 
         gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInitialState()
 
         gamePage.clickSkip()
         gamePage = GamePage(word= "auto".reversed())
+        gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInitialState()
 
         gamePage.addInput("aut")
@@ -69,53 +81,84 @@ class ScenarioTest {
         gamePage.clickSkip()
         gamePage = GamePage(word= "anecdote".reversed())
         gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInitialState()
 
         gamePage.addInput("anecdot")
+        gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "e")
         gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSufficientState()
 
         gamePage.clickSkip()
-
         gamePage = GamePage(word= "alphabet".reversed())
+        gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInitialState()
 
         gamePage.addInput("alphabt")
         gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "e")
         gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSufficientState()
 
         gamePage.clickCheck()
+        gamePage.assertIncorrectState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertIncorrectState()
 
         gamePage.clickSkip()
         gamePage = GamePage(word= "all".reversed())
         gamePage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInitialState()
 
         gamePage.addInput(text = "al")
         gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "e")
+        gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertSufficientState()
 
         gamePage.clickCheck()
         gamePage.assertIncorrectState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertIncorrectState()
 
         gamePage.removeInputLastLetter()
+        gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "l")
         gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSufficientState()
 
         gamePage.removeInputLastLetter()
+        gamePage.assertInsufficientState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertInsufficientState()
 
         gamePage.addInput(text = "e")
         gamePage.assertSufficientState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSufficientState()
 
         gamePage.clickCheck()
+        gamePage.assertIncorrectState()
+        activityScenarioRule.scenario.recreate()
         gamePage.assertIncorrectState()
     }
 }
