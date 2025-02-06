@@ -1,20 +1,68 @@
 package ru.twinown.expertcourseunscramblegame
 
+import android.view.View
 import ru.twinown.expertcourseunscramblegame.databinding.ActivityMainBinding
+
 //
 interface GameUiState {
-    fun update(binding: ActivityMainBinding):Unit = throw  IllegalStateException("")
+    fun update(binding: ActivityMainBinding)
 
-    data class InsufficientInput(val shuffledWord: String) : GameUiState {}
+    abstract class Abstract(
+        private val shuffledValue: String,
+        private val inputUiState: InputUiState,
+        private val skipVisibility: Int,
+        private val checkUiState: CheckUiState,
+        private val nextVisibility: Int
+    ) : GameUiState {
 
-    data class Initial(val shuffledWord: String) : GameUiState {}
+        override fun update(binding: ActivityMainBinding) = with(binding) {
+            shuffledWordTextView.text = shuffledValue
+            inputUiState.update(inputLayout, inputEditText)
+            skipButton.visibility = skipVisibility
+            checkUiState.update(checkButton)
+            nextButton.visibility = nextVisibility
+        }
+    }
 
-    data class SufficientInput(val shuffledWord: String) :
-        GameUiState {}
+    //до этого наследовались от гамюай стейта
+    data class InsufficientInput(private val shuffledWord: String) : Abstract(
+        shuffledWord,
+        InputUiState.Insufficient,
+        skipVisibility = View.VISIBLE,
+        CheckUiState.Disabled,
+        nextVisibility = View.GONE
+    )
 
-   data class Correct(val shuffledWord: String) : GameUiState{}
+    data class Initial(private val shuffledWord: String) : Abstract(
+        shuffledWord,
+        InputUiState.Initial,
+        skipVisibility = View.VISIBLE,
+        CheckUiState.Disabled,
+        nextVisibility = View.GONE
+    )
 
-    data class Incorrect(val shuffledWord: String) : GameUiState{}
+    data class SufficientInput(private val shuffledWord: String) : Abstract(
+        shuffledWord,
+        InputUiState.Sufficient,
+        skipVisibility = View.VISIBLE,
+        CheckUiState.Enabled,
+        nextVisibility = View.GONE
+    )
 
+    data class Correct(private val shuffledWord: String) : Abstract(
+        shuffledWord,
+        InputUiState.Correct,
+        skipVisibility = View.GONE,
+        CheckUiState.Invisible,
+        nextVisibility = View.VISIBLE
+    )
 
+    data class Incorrect(private val shuffledWord: String) : Abstract(
+        shuffledWord,
+        InputUiState.Incorrect,
+        skipVisibility = View.VISIBLE,
+        CheckUiState.Disabled,
+        nextVisibility = View.GONE
+    )
 }
+

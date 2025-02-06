@@ -10,6 +10,7 @@ import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -23,36 +24,42 @@ import ru.twinown.expertcourseunscramblegame.R
 import ru.twinown.expertcourseunscramblegame.TextInputLayoutErrorEnabledMatcher
 import ru.twinown.expertcourseunscramblegame.TextInputLayoutHasErrorText
 
-class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matcher<View>) {
+class InputUi(containerIdMatcher: Matcher<View>,
+              containerClassTypeMatcher: Matcher<View>) {
 
     private val inputLayoutId: Int = R.id.inputLayout
     private val layoutInteraction: ViewInteraction = onView(
         allOf(
-            containerIdMatcher,
-            containerClassTypeMatcher,
+            isAssignableFrom(TextInputLayout::class.java),
             withId(inputLayoutId),
-            isAssignableFrom(TextInputLayout::class.java)
+            containerClassTypeMatcher,
+            containerIdMatcher
         )
     )
 
+    //TODO
     //его родитель это интеракшн выше
     private val inputInteraction: ViewInteraction = onView(
         allOf(
-            containerIdMatcher,
-            containerClassTypeMatcher,
+            isAssignableFrom(TextInputEditText::class.java),
             withId(R.id.inputEditText),
-            withParent(withId(inputLayoutId)),
-            withParent(isAssignableFrom(TextInputEditText::class.java))
-        )
+            //с этими строками код на инишале не работает..так и не понял, почему
+            //используй layout inspector
+            /*withParent(withId(R.id.inputLayout)),
+            withParent(isAssignableFrom(TextInputLayout::class.java))*/
+       )
     )
+
+    private val textInputLayoutErrorEnabledMatcherFalse = TextInputLayoutErrorEnabledMatcher(false)
+
 
     //то есть на это й функции ты спрашиваешь себя , как должен вести себя твой инпут юай на инишал стейте
     //в матчесе ты и пишешь ожидаемый результат
     //далее типо по такой же схеме
-    fun assertInitialSate() {
+    fun assertInitialState() {
         layoutInteraction.check(matches(isEnabled())).check(
-            matches(TextInputLayoutErrorEnabledMatcher(false))
-        )
+            matches(TextInputLayoutErrorEnabledMatcher(false)))
+        inputInteraction.check(matches(isDisplayed()))
         inputInteraction.check(matches(withText("")))
     }
 
@@ -60,22 +67,22 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
         inputInteraction.perform(typeText(text), closeSoftKeyboard())
     }
 
+
     fun assertInsufficientState() {
         layoutInteraction.check(matches(isEnabled())).check(
-            matches(TextInputLayoutErrorEnabledMatcher(false))
+            matches(textInputLayoutErrorEnabledMatcherFalse)
         )
     }
 
     fun assertSufficientState() {
         layoutInteraction.check(matches(isEnabled())).check(
-            matches(TextInputLayoutErrorEnabledMatcher(false))
+            matches(textInputLayoutErrorEnabledMatcherFalse)
         )
     }
 
     fun assertCorrectState() {
         layoutInteraction.check(matches(isNotEnabled())).check(
-            matches(TextInputLayoutErrorEnabledMatcher(false))
-        )
+            matches(textInputLayoutErrorEnabledMatcherFalse))
     }
 
     fun assertIncorrectState() {

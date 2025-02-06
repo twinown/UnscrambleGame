@@ -6,6 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -22,7 +23,7 @@ class CheckButtonUi(
     onView(
         allOf(
             withId(R.id.checkButton),
-            ButtonColorMatcher("#549EFF"),
+            ButtonColorMatcher("#FF13CC"),
             withText(R.string.check),
             containerIdMatcher,
             containerClassTypeMatcher,
@@ -31,6 +32,7 @@ class CheckButtonUi(
     )
 ) {
     fun assertVisibleDisabled() {
+        onView(withId(R.id.checkButton)).check(matches(isDisplayed()))
         interaction.check(matches(isNotEnabled()))
             .check(matches(isCompletelyDisplayed()))
     }

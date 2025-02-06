@@ -43,7 +43,7 @@ class GamePage(word: String) {
     private val nextUi = ButtonUi(
         id = R.id.nextButton,
         textResId = R.string.next,
-        colorHex = "#FF13CC",
+        colorHex = "#549EFF",
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
@@ -61,7 +61,7 @@ class GamePage(word: String) {
     //при проверке состояния экрана проверяем состояние каждого элемента(с блюпринта,крч, типо , понял,да)
     fun assertInitialState() {
         shuffleWordUi.assertTextVisible()
-        inputUi.assertInitialSate()
+        inputUi.assertInitialState()
         skipUi.assertVisible()
         checkUi.assertVisibleDisabled()
         nextUi.assertNotVisible()
@@ -98,7 +98,7 @@ class GamePage(word: String) {
         shuffleWordUi.assertTextVisible()
         inputUi.assertCorrectState()
         skipUi.assertNotVisible()
-        checkUi.assertVisibleDisabled()
+        checkUi.assertNotVisible()
         nextUi.assertVisible()
 
     }
