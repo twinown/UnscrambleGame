@@ -2,9 +2,10 @@ package ru.twinown.expertcourseunscramblegame
 
 import android.view.View
 import ru.twinown.expertcourseunscramblegame.databinding.ActivityMainBinding
+import java.io.Serializable
 
 //
-interface GameUiState {
+interface GameUiState :Serializable {
     fun update(binding: ActivityMainBinding)
 
     abstract class Abstract(
