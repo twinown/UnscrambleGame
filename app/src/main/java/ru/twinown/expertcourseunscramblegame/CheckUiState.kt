@@ -2,8 +2,9 @@ package ru.twinown.expertcourseunscramblegame
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
+import java.io.Serializable
 
-interface CheckUiState{
+interface CheckUiState:Serializable{
     fun update(checkButton: AppCompatButton)
 
     abstract class Abstract(
