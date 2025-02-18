@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-         binding= ActivityMainBinding.inflate(layoutInflater)
+         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
@@ -83,10 +83,10 @@ class MainActivity : AppCompatActivity() {
 
         //значит, при  восстановлении после смерти активти(после чека,напр,у которого в поле ввода есть ошибка)
         // у тебя листенер уже был в онкриайте, а
-        //текста в поле инпута еще не было( появлялся только на онРесторе)
+        //текста в поле инпута еще не было( появлялся только на онРесторе,еоторый после онстарта)
         //потому перед показом ещё раз вычислялось sufficientstate ->ошибки никакой
-        //теперь сделали по-другому,то есть слушаются изменения только от ЮЗЕРА,а не от
-        //системы еще
+        //теперь сделали по-другому,то есть слушаются изменения только от ЮЗЕРА,а не от системы
+
         binding.inputEditText.addTextChangedListener(textWatcher)
     }
 

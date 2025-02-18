@@ -19,7 +19,7 @@ import ru.twinown.expertcourseunscramblegame.R
 class CheckButtonUi(
     containerIdMatcher: Matcher<View>,
     containerClassTypeMatcher: Matcher<View>
-) : AbstractButtonUi(
+):AbstractButtonUi(
     onView(
         allOf(
             withId(R.id.checkButton),
