@@ -1,5 +1,6 @@
 package ru.twinown.expertcourseunscramblegame
 
+import android.app.admin.TargetUser
 import android.view.View
 import ru.twinown.expertcourseunscramblegame.databinding.ActivityMainBinding
 import java.io.Serializable
@@ -34,9 +35,10 @@ interface GameUiState :Serializable {
         nextVisibility = View.GONE
     )
 
-    data class Initial(private val shuffledWord: String) : Abstract(
+    data class Initial(private val shuffledWord: String,
+        private val userInput: String="") : Abstract(
         shuffledWord,
-        InputUiState.Initial,
+        InputUiState.Initial(userInput),
         skipVisibility = View.VISIBLE,
         CheckUiState.Disabled,
         nextVisibility = View.GONE

@@ -139,10 +139,22 @@ private class FakeRepository:GameRepository{
     override fun originalWord ():String = originalList[index]
 
 
+    //todo ошибка мб здесь
     override fun next() {
         index++
         if(index==originalList.size){
             index = 0
         }
+        saveUserInput("")
+
+    }
+
+    private var  input:String = ""
+    override fun saveUserInput(value: String) {
+    input = value
+    }
+
+    override fun userInput(): String {
+    return input
     }
 }

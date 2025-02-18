@@ -4,12 +4,17 @@ import kotlin.streams.toList
 
 //
 interface GameRepository {
+
     fun shuffledWord(): String
     fun originalWord(): String
     fun next()
+    fun saveUserInput(value:String)
+    fun userInput():String
 
 
     class Base(
+        private val index:IntCache,
+        private val userInput:StringCache,
         private val shuffleStrategy: ShuffleStrategy = ShuffleStrategy.Base(),
         private val originalList: List<String> = listOf(
             "animal", "auto", "anecdote",
@@ -22,20 +27,28 @@ interface GameRepository {
 
         private val shuffledList = originalList.map {shuffleStrategy.shuffle(it)}
 
-        private var index = 0
 
         //метод отдачи данных с репы//текущего слова
         override fun shuffledWord(): String {
-            return shuffledList[index]
+            return shuffledList[index.read()]
         }
 
-        override fun originalWord(): String = originalList[index]
+        override fun originalWord(): String = originalList[index.read()]
 
 
         override fun next() {
-            if (index + 1 ==originalList.size)
-                index = 0
-            else index++
+            if (index.read() + 1 ==originalList.size)
+                index.save(0)
+            else index.save(index.read())
+            userInput.save("")
+        }
+
+        override fun saveUserInput(value: String) {
+            userInput.save(value)
+        }
+
+        override fun userInput(): String {
+            return userInput.read()
         }
     }
 }

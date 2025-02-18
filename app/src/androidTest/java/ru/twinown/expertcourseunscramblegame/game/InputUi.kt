@@ -24,10 +24,13 @@ import ru.twinown.expertcourseunscramblegame.R
 import ru.twinown.expertcourseunscramblegame.TextInputLayoutErrorEnabledMatcher
 import ru.twinown.expertcourseunscramblegame.TextInputLayoutHasErrorText
 
+//отвечает только за работу с полями
 class InputUi(containerIdMatcher: Matcher<View>,
               containerClassTypeMatcher: Matcher<View>) {
 
+    //это твой родительский инпут, понял,да ?
     private val inputLayoutId: Int = R.id.inputLayout
+
     private val layoutInteraction: ViewInteraction = onView(
         allOf(
             isAssignableFrom(TextInputLayout::class.java),
@@ -42,7 +45,7 @@ class InputUi(containerIdMatcher: Matcher<View>,
     private val inputInteraction: ViewInteraction = onView(
         allOf(
             isAssignableFrom(TextInputEditText::class.java),
-            withId(R.id.inputEditText),
+            withId(R.id.inputEditText)
             //с этими строками код на инишале не работает..так и не понял, почему
             //используй layout inspector
             /*withParent(withId(R.id.inputLayout)),
